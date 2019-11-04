@@ -103,4 +103,17 @@ router.get("/all", async (req, res) => {
     }
 });
 
+// @route   DELETE api/users/current
+// @desc    delete current user
+// @access  private 
+router.delete("/current", tokenauth, async(req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user.id);
+        res.json({msg: "removed user"});
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({msg: "server error"});
+    }
+}); 
+
 module.exports = router; 
