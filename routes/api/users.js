@@ -90,4 +90,17 @@ router.get("/current", tokenauth, async (req, res) => {
     }
 }); 
 
+// @route   GET api/users/all
+// @desc    get all user data 
+// @access  public 
+router.get("/all", async (req, res) => {
+    try {
+        const users = await User.find().select("-password");
+        res.json(users);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({msg: "server error"});
+    }
+});
+
 module.exports = router; 
