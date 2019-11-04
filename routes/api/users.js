@@ -19,8 +19,8 @@ router.get("/", (req, res) => res.json({msg: "users route"}));
 // @access  public 
 router.post("/register", 
     [
-        check("name", "please provide a name").not().isEmpty(),
-        check("email", "please provide an email").isEmail(),
+        check("name", "please provide a valid name").not().isEmpty(),
+        check("email", "please provide a valid email").isEmail(),
         check("password", "password must be at least 7 characters long").isLength({min: 7})
     ],
     async (req, res) => {
@@ -29,7 +29,6 @@ router.post("/register",
         if (!errors.isEmpty()) {
             return res.status(400).json({errors: errors.array()});
         }
-
         let {name, email, password} = req.body; 
 
         try {
@@ -77,10 +76,10 @@ router.post("/register",
     }
 );
 
-// @route   GET api/users/current
+// @route   POST api/users/current
 // @desc    get current user data 
 // @access  private 
-router.get("/current", tokenauth, async (req, res) => {
+router.post("/current", tokenauth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select("-password");
         res.json(user);
