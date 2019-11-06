@@ -1,0 +1,11 @@
+.greeting {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message {
+    color: white;
+    background: var(--dark-color); 
+}

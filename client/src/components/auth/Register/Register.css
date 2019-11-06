@@ -1,0 +1,18 @@
+.white-text, a {
+    color: white; 
+}
+
+.center-layout {
+    display: flex; 
+    flex-flow: column nowrap; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.background-dark {
+    background: var(--dark-color);
+}
+
+.top-space {
+    margin-top: 15%; 
+}
