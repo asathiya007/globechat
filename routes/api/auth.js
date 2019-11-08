@@ -7,15 +7,15 @@ const config = require("config");
 
 const router = express.Router(); 
 
-// @route   GET api/auth
+// @route   GET api/auth/test
 // @desc    test auth api endpoint
 // @access  public 
-router.get("/", (req, res) => res.json({msg: "auth route"}));
+router.get("/test", (req, res) => res.json({msg: "auth route"}));
 
 // @route   POST api/auth
 // @desc    login user 
 // @access  public
-router.post("/login",
+router.post("/",
     [
         check("email", "please provide a valid email").isEmail(),
         check("password", "please provide a password").not().isEmpty()
