@@ -9,7 +9,7 @@ const MessageSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now
     }, 
-    payload: {
+    text: {
         type: String, 
         required: true 
     }

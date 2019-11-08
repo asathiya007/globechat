@@ -9,15 +9,15 @@ const tokenauth = require("../../middleware/tokenauth");
 
 const router = express.Router(); 
 
-// @route   GET api/users
+// @route   GET api/users/test
 // @desc    test users api endpoint
 // @access  public 
-router.get("/", (req, res) => res.json({msg: "users route"})); 
+router.get("/test", (req, res) => res.json({msg: "testing users route"})); 
 
-// @route   POST api/users/register
+// @route   POST api/users/
 // @desc    register user 
 // @access  public 
-router.post("/register", 
+router.post("/", 
     [
         check("name", "please provide a valid name").not().isEmpty(),
         check("email", "please provide a valid email").isEmail(),
@@ -76,12 +76,19 @@ router.post("/register",
     }
 );
 
-// @route   POST api/users/current
+// @route   GET api/users/
 // @desc    get current user data 
 // @access  private 
-router.post("/current", tokenauth, async (req, res) => {
+router.get("/", tokenauth, async (req, res) => {
     try {
+        // get user 
         const user = await User.findById(req.user.id).select("-password");
+
+        // check if user exists 
+        if (!user) {
+            return res.status(400).json({msg: "user not found"});
+        }
+
         res.json(user);
     } catch (err) {
         console.error(err.message);
@@ -92,20 +99,20 @@ router.post("/current", tokenauth, async (req, res) => {
 // @route   GET api/users/all
 // @desc    get all user data 
 // @access  public 
-router.get("/all", async (req, res) => {
-    try {
-        const users = await User.find().select("-password");
-        res.json(users);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).json({msg: "server error"});
-    }
-});
+// router.get("/all", async (req, res) => {
+//     try {
+//         const users = await User.find().select("-password");
+//         res.json(users);
+//     } catch (err) {
+//         console.error(err.message);
+//         res.status(500).json({msg: "server error"});
+//     }
+// });
 
-// @route   DELETE api/users/current
+// @route   DELETE api/users/
 // @desc    delete current user
 // @access  private 
-router.delete("/current", tokenauth, async(req, res) => {
+router.delete("/", tokenauth, async(req, res) => {
     try {
         await User.findByIdAndDelete(req.user.id);
         res.json({msg: "removed user"});
