@@ -2,9 +2,16 @@ const mongoose = require("mongoose");
 
 const MessageSchema = new mongoose.Schema({
     user: {
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: "user"
     }, 
+    name: {
+        type: String, 
+        required: true
+    }, 
+    avatar: {
+        type: String
+    },
     date: {
         type: Date, 
         default: Date.now
@@ -12,6 +19,10 @@ const MessageSchema = new mongoose.Schema({
     text: {
         type: String, 
         required: true 
+    }, 
+    edited: {
+        type: Boolean, 
+        default: false
     }
 }); 
 
