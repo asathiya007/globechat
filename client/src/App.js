@@ -6,22 +6,27 @@ import Video from "./components/layout/Video/Video";
 import Landing from "./components/layout/Landing/Landing";
 import Register from "./components/auth/Register/Register";
 import Login from "./components/auth/Login/Login";
+// redux 
+import {Provider} from "react-redux";
+import store from "./store";
 
 const App = () => {
   return (
-    <Router>
-      <Fragment>
-        <Navbar/>
-        <Video/>
-        <Route exact path="/" component={Landing}/>
-        <section className="container">
-          <Switch>
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-          </Switch>
-        </section>
-      </Fragment>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <Navbar/>
+          <Video/>
+          <Route exact path="/" component={Landing}/>
+          <section className="container">
+            <Switch>
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+            </Switch>
+          </section>
+        </Fragment>
+      </Router>
+    </Provider> 
   ); 
 }
 
