@@ -4,7 +4,7 @@ import "./Video.css";
 
 const Video = () => {
     return (
-        <video src={vid} autoPlay="autoplay" loop className="video"></video>
+        <video src={vid} autoPlay muted loop className="video"></video>
     )
 }
 
