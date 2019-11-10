@@ -9,6 +9,7 @@ import Login from "./components/auth/Login/Login";
 // redux 
 import {Provider} from "react-redux";
 import store from "./store";
+import Alert from "./components/layout/Alert/Alert";
 
 const App = () => {
   return (
@@ -18,7 +19,8 @@ const App = () => {
           <Navbar/>
           <Video/>
           <Route exact path="/" component={Landing}/>
-          <section className="container">
+          <section className="container flexcenter">
+            <Alert />
             <Switch>
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />

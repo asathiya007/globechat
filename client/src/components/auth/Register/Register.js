@@ -3,6 +3,7 @@ import "./Register.css";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {produceAlert} from "../../../actions/alert";
+import PropTypes from "prop-types";
 
 const Register = ({produceAlert}) => {
     const [formData, setFormData] = useState({
@@ -19,9 +20,7 @@ const Register = ({produceAlert}) => {
 
     const onSubmit = () => {
         if (password !== password2) {
-            console.log("1");
             produceAlert("passwords do not match", "danger");
-            console.log("3");
         } else {
             console.log("success");
         }
@@ -60,5 +59,9 @@ const Register = ({produceAlert}) => {
         </main>
     )
 }
+
+Register.propTypes = {
+    produceAlert: PropTypes.func.isRequired
+}; 
 
 export default connect(null, {produceAlert})(Register); 
