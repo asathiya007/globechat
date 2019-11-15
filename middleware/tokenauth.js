@@ -14,7 +14,6 @@ module.exports = (req, res, next) => {
         req.user = payload.user; 
         next(); 
     } catch (err) {
-        console.error(err.message);
         res.status(500).json({msg: "server error"});
     }
 }
