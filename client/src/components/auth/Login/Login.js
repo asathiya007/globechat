@@ -24,7 +24,7 @@ const Login = ({loginUser, isAuthenticated}) => {
     }
 
     return (
-        <main className="pa4 white-text background-dark top-space w-40 center br4">
+        <main className="pa4 white-text background-dark w-40 center br4">
             <div className="measure center-layout">
                 <fieldset id="sign_up" className="ba b--transparent ph0">
                 <legend className="f2 fw6 ph0 mh0 tc">Log In</legend>

@@ -12,6 +12,14 @@
   justify-content: center;
 }
 
+.white-text {
+  color: white; 
+}
+
+.top-space {
+    margin-top: 15%; 
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
