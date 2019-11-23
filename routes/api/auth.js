@@ -33,13 +33,13 @@ router.post("/",
             // check if user exists 
             const user = await User.findOne({ email });
             if (!user) {
-                return res.json(400).json({ msg: "invalid credentials" });
+                return res.status(400).json({ msg: "invalid credentials" });
             }
 
             // check incorrect password 
             const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
-                return res.json(400).json({msg: "invalid credentials"});
+                return res.status(400).json({msg: "invalid credentials"});
             }
 
             // create JWT 
@@ -54,7 +54,7 @@ router.post("/",
                 {expiresIn: 3600},
                 (err, token) => {
                     if (err) throw err; 
-                    res.json({token});
+                    return res.json({token});
                 }
             ); 
         } catch (err) {

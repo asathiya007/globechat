@@ -10,10 +10,7 @@ import Login from "./components/auth/Login/Login";
 import {Provider} from "react-redux";
 import store from "./store";
 import Alert from "./components/layout/Alert/Alert";
-import setAuthToken from "./utils/setAuthToken";
 import {loadUser} from "./actions/auth";
-
-setAuthToken(localStorage.token);
 
 const App = () => {
   useEffect(() => {
