@@ -11,6 +11,8 @@ import {Provider} from "react-redux";
 import store from "./store";
 import Alert from "./components/layout/Alert/Alert";
 import {loadUser} from "./actions/auth";
+import Dashboard from './components/dashboard/Dashboard/Dashboard';
+import PrivateRoute from "./components/routing/PrivateRoute/PrivateRoute"; 
 
 const App = () => {
   useEffect(() => {
@@ -24,11 +26,12 @@ const App = () => {
           <Navbar/>
           <Video/>
           <Route exact path="/" component={Landing}/>
-          <section className="container flexcenter">
+          <section className="container flexcenter top-space white-text">
             <Alert />
             <Switch>
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/dashboard" component={Dashboard}/>
             </Switch>
           </section>
         </Fragment>
