@@ -32,7 +32,7 @@ const Register = ({produceAlert, registerUser, isAuthenticated}) => {
     }
 
     return (
-        <main className="pa4 white-text background-dark w-40 center br4">
+        <main className="pa4 white-text background-dark w-40 center br4 top-space">
             <div className="measure center-layout">
                 <fieldset id="sign_up" className="ba b--transparent ph0">
                 <legend className="f2 fw6 ph0 mh0 tc">Register</legend>

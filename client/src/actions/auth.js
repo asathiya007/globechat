@@ -6,7 +6,8 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL, 
-    LOGOUT
+    LOGOUT,
+    CLEAR_PROFILE
 } from "./types";
 import {produceAlert} from "./alert";
 import setAuthToken from "../utils/setAuthToken";
@@ -26,6 +27,10 @@ export const loadUser = () => async dispatch => {
         dispatch({
             type: AUTH_ERROR
         }); 
+
+        dispatch({
+            type: CLEAR_PROFILE
+        });
     }
 }
 
@@ -84,6 +89,7 @@ export const loginUser = ({ email, password }) => async dispatch => {
     } catch (err) {
         // create an alert for each error message, if unsuccessful 
         const errors = err.response.data.errors;
+        console.log(errors);
         if (errors) {
             errors.forEach(err => dispatch(produceAlert(err.msg, "danger")));
         }
@@ -98,5 +104,9 @@ export const loginUser = ({ email, password }) => async dispatch => {
 export const logoutUser = () => dispatch => {
     dispatch({
         type: LOGOUT
+    }); 
+
+    dispatch({
+        type: CLEAR_PROFILE
     }); 
 }
