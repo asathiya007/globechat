@@ -1,11 +1,11 @@
 import {
     GET_PROFILE, 
     PROFILE_ERROR, 
-    LOGOUT 
+    CLEAR_PROFILE 
 } from "../actions/types";
 
 const initialState = {
-    user: null,
+    profile: null,
     allUsers: [],
     loading: true, 
     error: {}
@@ -18,7 +18,7 @@ export default function(state = initialState, action) {
         case GET_PROFILE: 
             return {
                 ...state, 
-                user: payload,
+                profile: payload,
                 loading: false 
             }
         case PROFILE_ERROR: 
@@ -27,9 +27,10 @@ export default function(state = initialState, action) {
                 error: payload, 
                 loading: false 
             }
-        case LOGOUT: 
+        case CLEAR_PROFILE: 
             return {
-                user: null, 
+                ...state, 
+                profile: null, 
                 allUsers: [],
                 loading: false, 
                 error: {}

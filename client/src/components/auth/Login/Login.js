@@ -24,17 +24,17 @@ const Login = ({loginUser, isAuthenticated}) => {
     }
 
     return (
-        <main className="pa4 white-text background-dark w-40 center br4">
+        <main className="pa4 white-text background-dark w-40 center br4 top-space">
             <div className="measure center-layout">
                 <fieldset id="sign_up" className="ba b--transparent ph0">
                 <legend className="f2 fw6 ph0 mh0 tc">Log In</legend>
                 <div className="mt3">
                     <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                    <input className="pa2 input-reset ba b--white bg-transparent hover-bg-black hover-white w-100" type="email" name="email"  id="email-address" onChange={e => onChange(e)}/>
+                    <input className="pa2 input-reset ba b--white bg-transparent hover-bg-black hover-white w-100 white-text" type="email" name="email"  id="email-address" onChange={e => onChange(e)}/>
                 </div>
                 <div className="mv3">
                     <label className="db fw6 lh-copy f6 white-text" htmlFor="password">Password</label>
-                    <input className="b pa2 input-reset ba b--white bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  id="password" onChange={e => onChange(e)}/>
+                    <input className="b pa2 input-reset ba b--white bg-transparent hover-bg-black hover-white w-100 white-text" type="password" name="password"  id="password" onChange={e => onChange(e)}/>
                 </div>
                 </fieldset>
                 <div className="">
