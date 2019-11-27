@@ -1,12 +1,15 @@
 import React, {Fragment, useState} from 'react'
 import PropTypes from 'prop-types'
 import "./CreateProfile.css";
+import {connect} from "react-redux";
+import {createProfile} from "../../../actions/profile";
+import {Link, withRouter} from "react-router";
 
-const CreateProfile = props => {
+const CreateProfile = ({createProfile, history, userEmail}) => {
     const [formData, setFormData] = useState({
         location: "",
         phone: "",
-        email: "",
+        email: userEmail,
         bio: "",
         twitter: "",
         facebook: "",
@@ -29,13 +32,32 @@ const CreateProfile = props => {
         instagram
     } = formData; 
 
+    const fitPhoneNum = phoneNum => {
+        let newPhoneNum = "";
+        for (let i = 0; i < phoneNum.length; i++) {
+            const code = phoneNum.charCodeAt(i);
+            if (code <= 57 && code >= 48) {
+                newPhoneNum += phoneNum.charAt(i);
+            }
+        }
+        return newPhoneNum;
+    }
+
     const onChange = e => {
+        if (e.target.name === "phone") {
+            e.target.value = fitPhoneNum(e.target.value);
+        }
         setFormData({...formData, [e.target.name]: e.target.value});
+    }
+
+    const onSubmit = e => {
+        e.preventDefault(); 
+        createProfile(formData, history);
     }
 
     return (
         <Fragment>
-            <form className="form" style={{width: "40vw"}}>
+            <form className="form" style={{width: "40vw"}} onSubmit={onSubmit}>
                 <div className="form-group">
                     <input type="text" placeholder="Location" name="location" value={location} onChange={onChange}/>
                     <small className="form-text">
@@ -49,7 +71,7 @@ const CreateProfile = props => {
                     </small>
                 </div>
                 <div className="form-group">
-                    <input type="text" placeholder="Email" name="email" value={email} onChange={onChange}/>
+                    <input type="text" name="email" value={email} readOnly/>
                     <small className="form-text">
                         Email
                     </small>
@@ -102,7 +124,11 @@ const CreateProfile = props => {
 }
 
 CreateProfile.propTypes = {
-
+    createProfile: PropTypes.func.isRequired
 }
 
-export default CreateProfile
+const mapStateToProps = state => ({
+    userEmail: state.auth.user.email
+}); 
+
+export default connect(mapStateToProps, {createProfile})(withRouter(CreateProfile)); 
