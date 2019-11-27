@@ -89,7 +89,6 @@ export const loginUser = ({ email, password }) => async dispatch => {
     } catch (err) {
         // create an alert for each error message, if unsuccessful 
         const errors = err.response.data.errors;
-        console.log(errors);
         if (errors) {
             errors.forEach(err => dispatch(produceAlert(err.msg, "danger")));
         }
