@@ -1,0 +1,13 @@
+@media screen and (max-width: 1446px) {
+    .top-space {
+        margin-top: 10%;
+    }
+}
+
+.form .form-text {
+    color: white; 
+}
+
+.social-input i {
+    background: var(--light-color);
+}
