@@ -24,18 +24,29 @@ export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, p
                     Welcome {user && user.name}
                 </p>
             </div>
-            <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
+            <div>
                 {profile !== null ? (
                 <Fragment>
-                    <p>You have a profile!</p> 
+                    <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
+                        <p>Edit your profile</p>
+                        <Link to="/edit-profile" className="btn btn-primary my-1">
+                            Edit Profile
+                        </Link>
+                    </div>
+                    <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
+                        <p>Start chatting!</p>
+                        <Link to="/globechat" className="btn btn-primary my-1">
+                            Enter GlobeChat
+                        </Link>
+                    </div>
                 </Fragment>
             ) : (
-                <Fragment>
+                <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
                     <p>You have not yet created a profile, please add some info</p>
                     <Link to="/create-profile" className="btn btn-primary my-1">
                         Create Profile
                     </Link>
-                </Fragment>
+                </div>
             )}
             </div>
         </div>
