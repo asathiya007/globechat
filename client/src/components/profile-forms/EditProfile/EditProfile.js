@@ -1,15 +1,15 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-import "./CreateProfile.css";
+import "./EditProfile.css";
 import {connect} from "react-redux";
-import {createProfile} from "../../../actions/profile";
+import {createProfile, getCurrentProfile} from "../../../actions/profile";
 import {Link, withRouter} from "react-router-dom";
 
-const CreateProfile = ({createProfile, history, userEmail}) => {
+const EditProfile = ({createProfile, getCurrentProfile, history, profile: {profile, loading}}) => {
     const [formData, setFormData] = useState({
         location: "",
         phone: "",
-        email: userEmail,
+        email: profile.email,
         bio: "",
         twitter: "",
         facebook: "",
@@ -32,6 +32,27 @@ const CreateProfile = ({createProfile, history, userEmail}) => {
         instagram
     } = formData; 
 
+    const [fetchedProfStart, setFetchedProfStart] = useState(false);
+
+    useEffect(() => {
+        if (!fetchedProfStart) {
+            getCurrentProfile(); 
+            setFetchedProfStart(true);
+        }
+
+        setFormData({
+            location: loading || !profile.location ? "" : profile.location,
+            phone: loading || !profile.phone ? "" : profile.phone, 
+            email: loading || !profile.email ? "" : profile.email,
+            bio: loading || !profile.bio ? "" : profile.bio,
+            twitter: loading || !profile.social ? "" : profile.social.twitter,
+            facebook: loading || !profile.social ? "" : profile.social.facebook,
+            linkedin: loading || !profile.social ? "" : profile.social.linkedin,
+            youtube: loading || !profile.social ? "" : profile.social.youtube,
+            instagram: loading || !profile.social ? "" : profile.social.instagram
+        });
+    }, [loading, profile, getCurrentProfile, fetchedProfStart]); 
+
     const fitPhoneNum = phoneNum => {
         let newPhoneNum = "";
         for (let i = 0; i < phoneNum.length; i++) {
@@ -52,15 +73,14 @@ const CreateProfile = ({createProfile, history, userEmail}) => {
 
     const onSubmit = e => {
         e.preventDefault(); 
-        createProfile(formData, history);
+        createProfile(formData, history, true);
     }
 
     return (
         <div>
-            <h1 className='large white-text'>Create Your Profile</h1>
+            <h1 className='large white-text'>Edit Your Profile</h1>
             <p className='lead'>
-                <i className='fas fa-user' /> Let's get some information to make your
-				profile stand out
+                <i className='fas fa-user' /> Let's edit some information to update your profile
 			</p>
             <form className="form" style={{width: "40vw"}} onSubmit={onSubmit}>
                 <div className="form-group">
@@ -128,12 +148,13 @@ const CreateProfile = ({createProfile, history, userEmail}) => {
     )
 }
 
-CreateProfile.propTypes = {
-    createProfile: PropTypes.func.isRequired
+EditProfile.propTypes = {
+    createProfile: PropTypes.func.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-    userEmail: state.auth.user.email
+    profile: state.profile
 }); 
 
-export default connect(mapStateToProps, {createProfile})(withRouter(CreateProfile)); 
+export default connect(mapStateToProps, {createProfile, getCurrentProfile})(withRouter(EditProfile)); 
