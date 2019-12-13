@@ -5,8 +5,9 @@ import PropTypes from "prop-types";
 import Spinner from "../../layout/Spinner/Spinner"; 
 import "./Dashboard.css";
 import {Link} from "react-router-dom";
+import {deleteAccount} from "../../../actions/auth";
 
-export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, profile}}) => {
+export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, profile}, deleteAccount}) => {
     useEffect(() => {
         getCurrentProfile(); 
     }, [getCurrentProfile]); 
@@ -16,7 +17,7 @@ export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, p
     }
 
     return (
-        <div className="top-space">
+        <div className="top-space w-50">
             <div className="tc background-dark br4 ph3 pv2">
                 <h1 className="large white-text">Dashboard</h1>
                 <p className="lead">
@@ -28,13 +29,13 @@ export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, p
                 {profile !== null ? (
                 <Fragment>
                     <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
-                        <p>Edit your profile</p>
+                        <p className="f3">Edit your profile</p>
                         <Link to="/edit-profile" className="btn btn-primary my-1">
                             Edit Profile
                         </Link>
                     </div>
                     <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
-                        <p>Start chatting!</p>
+                        <p className="f3">Start chatting!</p>
                         <Link to="/globechat" className="btn btn-primary my-1">
                             Enter GlobeChat
                         </Link>
@@ -42,12 +43,18 @@ export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, p
                 </Fragment>
             ) : (
                 <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
-                    <p>You have not yet created a profile, please add some info</p>
+                    <p className="f3">Create Your Profile</p>
                     <Link to="/create-profile" className="btn btn-primary my-1">
                         Create Profile
                     </Link>
                 </div>
             )}
+            <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
+                <p className="f3">Delete Your Account</p>
+                <button className="btn btn-danger my-1" onClick={deleteAccount}>
+                    <i className="fas fa-user-minus"></i> Delete Account
+                </button>
+            </div>
             </div>
         </div>
     )
@@ -56,7 +63,8 @@ export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, p
 Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
-    profile: PropTypes.object.isRequired
+    profile: PropTypes.object.isRequired,
+    deleteAccount: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -64,4 +72,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 }); 
 
-export default connect(mapStateToProps, {getCurrentProfile})(Dashboard); 
+export default connect(mapStateToProps, {getCurrentProfile, deleteAccount})(Dashboard); 

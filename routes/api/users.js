@@ -6,6 +6,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const tokenauth = require("../../middleware/tokenauth");
+const Profile = require("../../models/Profile");
+const Message = require("../../models/Message");
 
 const router = express.Router(); 
 
@@ -115,6 +117,8 @@ router.get("/", tokenauth, async (req, res) => {
 router.delete("/", tokenauth, async(req, res) => {
     try {
         await User.findByIdAndDelete(req.user.id);
+        await Profile.deleteOne({user: req.user.id});
+        await Message.deleteMany({user: req.user.id});
         res.json({msg: "removed user"});
     } catch (err) {
         console.error(err.message);

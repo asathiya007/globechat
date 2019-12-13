@@ -7,7 +7,9 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL, 
     LOGOUT,
-    CLEAR_PROFILE
+    CLEAR_PROFILE,
+    ACCOUNT_DELETED,
+    PROFILE_ERROR
 } from "./types";
 import {produceAlert} from "./alert";
 import setAuthToken from "../utils/setAuthToken";
@@ -108,4 +110,23 @@ export const logoutUser = () => dispatch => {
     dispatch({
         type: CLEAR_PROFILE
     }); 
+}
+
+// delete account 
+export const deleteAccount = () => async dispatch => {
+    if (window.confirm("Are you sure? This action cannot be undone")) {
+        try {
+            await axios.delete("/api/users");
+
+            dispatch({ type: CLEAR_PROFILE });
+            dispatch({ type: ACCOUNT_DELETED });
+
+            dispatch(produceAlert("Account permanently deleted")); 
+        } catch(err) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: {msg: err.response.statusText, status: err.response.status}
+            }); 
+        }
+    }
 }
