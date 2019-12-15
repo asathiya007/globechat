@@ -1,7 +1,8 @@
 import {
     GET_PROFILE, 
     PROFILE_ERROR, 
-    CLEAR_PROFILE 
+    CLEAR_PROFILE,
+    GET_USERS
 } from "../actions/types";
 
 const initialState = {
@@ -34,6 +35,12 @@ export default function(state = initialState, action) {
                 allUsers: [],
                 loading: false, 
                 error: {}
+            }
+        case GET_USERS:
+            return {
+                ...state, 
+                allUsers: payload.profiles,
+                loading: false
             }
         default: 
             return state; 

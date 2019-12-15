@@ -1,7 +1,9 @@
 import axios from "axios";
 import {
     GET_PROFILE, 
-    PROFILE_ERROR
+    PROFILE_ERROR,
+    GET_USERS,
+    CLEAR_PROFILE
 } from "./types";
 import {produceAlert} from "../actions/alert";
 
@@ -20,6 +22,23 @@ export const getCurrentProfile = () => async dispatch => {
         }); 
     }
 }
+
+// get all users' profiles 
+export const getAllUsers = () => async dispatch => {
+    dispatch({type: CLEAR_PROFILE});
+    try {
+        const res = await axios.get("api/profile/all");
+        dispatch({
+            type: GET_USERS,
+            payload: res.data
+        }); 
+    } catch(err) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: {msg: err.response.statusText, status: err.response.status}
+        }); 
+    }
+}; 
 
 // create or update current user's profile 
 export const createProfile = (formData, history, edit = false) => async dispatch => {

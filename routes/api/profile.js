@@ -83,7 +83,7 @@ router.post("/",
 // @route   GET api/profile/all
 // @desc    get all users' profiles 
 // @access  private
-router.get("/all", tokenauth, async (req, res) => {
+router.get("/all", async (req, res) => {
     try {
         const profiles = await Profile.find()
             .populate("user", ["name", "avatar"]); 
