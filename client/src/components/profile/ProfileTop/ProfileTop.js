@@ -1,6 +1,7 @@
 import React from 'react'; 
 import PropTypes from 'prop-types'; 
 import "./ProfileTop.css";
+import Moment from "react-moment";
 
 const ProfileTop = ({profile: {
     location,
@@ -21,7 +22,9 @@ const ProfileTop = ({profile: {
             />
             <h1 className="large text-primary">{name}</h1>
             <p className="lead text-primary">{location}</p>
-            <p>Joined on {date.substring(0, 10)}</p>
+            <p>
+                Joined on <Moment format="YYYY/MM/DD">{date}</Moment>
+            </p>
             <div>
                 <p>
                     <i className="fas fa-envelope"></i> {email}
