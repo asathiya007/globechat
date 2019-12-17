@@ -14,3 +14,4 @@ export const ACCOUNT_DELETED = "ACCOUNT_DELETED";
 export const GET_USERS = "GET_USERS";
 export const GET_POSTS = "GET_POSTS";
 export const POST_ERROR = "POST_ERROR";
+export const UPDATE_REACTS = "UPDATE_REACTS";

@@ -19,7 +19,7 @@ export const loadUser = () => async dispatch => {
 
     try {
         if (localStorage.token) {
-            const res = await axios.get("api/users"); 
+            const res = await axios.get("/api/users"); 
             dispatch({
                 type: USER_LOADED,
                 payload: res.data

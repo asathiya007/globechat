@@ -4,14 +4,15 @@ import "./PostItem.css";
 import Moment from "react-moment";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
+import {likePost, lovePost, laughPost} from "../../../actions/post";
 
-const PostItem = ({auth, post: {_id, text, name, avatar, user, likes, comments, date}}) => {
+const PostItem = ({likePost, lovePost, laughPost, auth, post: {_id, text, name, avatar, user, likes, loves, laughs, comments, date}}) => {
     return (
-        <div class="post background-dark br4 p-1 my-1">
+        <div className="post background-dark br4 p-1 my-1">
             <div>
                 <Link to={`profile/${user._id}`}>
                     <img
-                        class="round-img"
+                        className="round-img"
                         src={avatar}
                         alt="profile pic"
                     />
@@ -19,27 +20,40 @@ const PostItem = ({auth, post: {_id, text, name, avatar, user, likes, comments, 
                 </Link>
             </div>
             <div>
-                <p class="my-1">
+                <p className="my-1">
                     {text}
                 </p>
-                <p class="post-date">
+                <p className="post-date">
                     <Moment format="YYYY/MM/DD">{date}</Moment>
                 </p>
-                <button type="button" class="btn btn-light">
-                    <i class="fas fa-thumbs-up"></i>
+                <button onClick={e => likePost(_id)} type="button" className="btn btn-light">
+                    <i className="fas fa-thumbs-up"></i>
                     {
                         likes.length > 0 && (
                             <span>{" " + likes.length}</span>
                         )
                     }
                 </button>
-                <button type="button" class="btn btn-light">
-                    <i class="fas fa-thumbs-down"></i>
+                <button onClick={e => lovePost(_id)} type="button" className="btn btn-light">
+                    <i className="fas fa-heart"></i>
+                    {
+                        loves.length > 0 && (
+                            <span>{" " + loves.length}</span>
+                        )
+                    }
                 </button>
-                <Link to={`/post/${_id}`} class="btn btn-primary">
+                <button onClick={e => laughPost(_id)} type="button" className="btn btn-light">
+                    <i className="fas fa-laugh-beam"></i>
+                    {
+                        laughs.length > 0 && (
+                            <span>{" " + laughs.length}</span>
+                        )
+                    }
+                </button>
+                <Link to={`/post/${_id}`} className="btn btn-primary">
                     Discussion {
                         comments.length > 0 && (
-                            <span class='comment-count'>{comments.length}</span>
+                            <span className='comment-count'>{comments.length}</span>
                         )
                     }
                 </Link>
@@ -47,9 +61,9 @@ const PostItem = ({auth, post: {_id, text, name, avatar, user, likes, comments, 
                     !auth.loading && user === auth.user._id && (
                         <button
                             type="button"
-                            class="btn btn-danger"
+                            className="btn btn-danger"
                         >
-                            <i class="fas fa-times"></i>
+                            <i className="fas fa-times"></i>
                         </button>
                     )
                 }
@@ -60,11 +74,14 @@ const PostItem = ({auth, post: {_id, text, name, avatar, user, likes, comments, 
 
 PostItem.propTypes = {
     auth: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    likePost: PropTypes.func.isRequired,
+    lovePost: PropTypes.func.isRequired,
+    laughPost: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, {})(PostItem);
+export default connect(mapStateToProps, {likePost, lovePost, laughPost})(PostItem);

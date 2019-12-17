@@ -32,6 +32,22 @@ const PostSchema = new mongoose.Schema({
             }
         }
     ], 
+    loves: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "user"
+            }
+        }
+    ],
+    laughs: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "user"
+            }
+        }
+    ],
     comments: [
         {
             user: {

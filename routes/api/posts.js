@@ -144,4 +144,97 @@ router.put("/:id",
 //     }
 // }); 
 
+// @route   PUT api/posts/like/:id
+// @desc    like a post 
+// @access  private
+router.put("/like/:id", tokenauth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        // obtain new likes 
+        const newLikes = post.likes.filter(like => like.user.toString() !== req.user.id);
+
+        // if the post has not been liked, like it, else unlike it 
+        if (post.likes.length === newLikes.length) {
+            post.likes.unshift({ user: req.user.id });
+        } else {
+            post.likes = newLikes;
+        }
+
+        // unlove and unlaugh at the post
+        const newLoves = post.loves.filter(love => love.user.toString() !== req.user.id);
+        post.loves = newLoves; 
+        const newLaughs = post.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
+        post.laughs = newLaughs; 
+
+        await post.save();
+        res.json({likes: post.likes, loves: post.loves, laughs: post.laughs});
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+}); 
+
+// @route   PUT api/posts/like/:id
+// @desc    love a post 
+// @access  private
+router.put("/love/:id", tokenauth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        // obtain new loves 
+        const newLoves = post.loves.filter(love => love.user.toString() !== req.user.id);
+
+        // if the post has not been loved, like it, else unlove it 
+        if (post.loves.length === newLoves.length) {
+            post.loves.unshift({ user: req.user.id });
+        } else {
+            post.loves = newLoves;
+        }
+
+        // unlike and unlaugh at the post
+        const newLikes = post.likes.filter(like => like.user.toString() !== req.user.id);
+        post.likes = newLikes;
+        const newLaughs = post.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
+        post.laughs = newLaughs; 
+
+        await post.save();
+        res.json({ likes: post.likes, loves: post.loves, laughs: post.laughs });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+});
+
+// @route   PUT api/posts/laugh/:id
+// @desc    laugh at a post 
+// @access  private
+router.put("/laugh/:id", tokenauth, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+
+        // obtain new laughs 
+        const newLaughs = post.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
+
+        // if the post has not been laughed at, like it, else unlaugh at it 
+        if (post.laughs.length === newLaughs.length) {
+            post.laughs.unshift({ user: req.user.id });
+        } else {
+            post.laughs = newLaughs;
+        }
+
+        // unlike and unlove at the post
+        const newLikes = post.likes.filter(like => like.user.toString() !== req.user.id);
+        post.likes = newLikes;
+        const newLoves = post.loves.filter(love => love.user.toString() !== req.user.id);
+        post.loves = newLoves;
+
+        await post.save();
+        res.json({ likes: post.likes, loves: post.loves, laughs: post.laughs });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+});
+
 module.exports = router; 
