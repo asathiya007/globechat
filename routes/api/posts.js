@@ -1,38 +1,37 @@
 const express = require("express");
 const tokenauth = require("../../middleware/tokenauth");
 const {check, validationResult} = require("express-validator");
-const Message = require("../../models/Message");
+const Post = require("../../models/Post");
 const User = require("../../models/User");
-
 const router = express.Router(); 
 
-// @route   GET api/messages/test
-// @desc    test messages api endpoint
+// @route   GET api/posts/test
+// @desc    test posts api endpoint
 // @access  public
-router.get("/test", (req, res) => res.json({msg: "testing messages route"}));
+router.get("/test", (req, res) => res.json({msg: "testing posts route"}));
 
-// @route   GET api/messages/
-// @desc    get all messages from all users
+// @route   GET api/posts/
+// @desc    get all posts from all users
 // @access  private
 router.get("/", tokenauth, async (req, res) => {
-    // get all messages, if possible  
+    // get all posts, if possible  
     try {
-        const messages = await Message.find().sort("date");
-        res.json({messages});
+        const posts = await Post.find().sort("date");
+        res.json({posts});
     } catch (err) {
         console.error(err.message); 
         res.status(500).json("server error");
     }
 }); 
 
-// @route   POST api/messages/
-// @desc    send a message
+// @route   POST api/posts/
+// @desc    make a post
 // @access  private
 router.post("/",
     [
         tokenauth,
         [
-            check("text", "please provide message text").not().isEmpty()
+            check("text", "please provide text").not().isEmpty()
         ],
     ], 
     async (req, res) => {
@@ -42,7 +41,7 @@ router.post("/",
             return res.status(400).json({errors: errors.array()});
         }
 
-        // send message, if possible 
+        // make post, if possible 
         try {
             // get user info, if user exists 
             const user = await User.findById(req.user.id);
@@ -51,15 +50,15 @@ router.post("/",
             }
             const {name, avatar} = user; 
 
-            // create and send message 
-            const message = new Message({
+            // create and send post 
+            const post = new Post({
                 user: req.user.id,
                 name, 
                 avatar, 
                 text: req.body.text,
             });
-            await message.save();
-            res.json(message);
+            await post.save();
+            res.json(post);
         } catch (err) {
             console.error(err.message);
             res.status(500).json({msg: "server error"});
@@ -67,40 +66,40 @@ router.post("/",
     }
 ); 
 
-// @route   DELETE api/messages/:id
-// @desc    delete a message 
+// @route   DELETE api/posts/:id
+// @desc    delete a post
 // @access  private
 router.delete("/:id", tokenauth, async (req, res) => {
-    // find and delete the message, if possible 
+    // find and delete the post, if possible 
     try {
-        // get message, if exists 
-        const message = await Message.findById(req.params.id);
-        if (!message) {
-            return res.status(400).json({msg: "message not found"});
+        // get post, if exists 
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(400).json({msg: "post not found"});
         }
 
         // check user 
-        if (req.user.id !== message.user.toString()) {
+        if (req.user.id !== post.user.toString()) {
             return res.status(400).json({msg: "user not authorized"});
         }
 
-        // remove message 
-        await message.remove(); 
-        res.json({msg: "message deleted"});
+        // remove post 
+        await post.remove(); 
+        res.json({msg: "post deleted"});
     } catch (err) {
         console.error(err.message);
         res.status(500).json({msg: "server error"});
     }
 });
 
-// @route   PUT api/messages/:id
-// @desc    edit a message 
+// @route   PUT api/posts/:id
+// @desc    edit a post 
 // @access  private
 router.put("/:id",
     [
         tokenauth, 
         [
-            check("text", "please provide message text").not().isEmpty()
+            check("text", "please provide text").not().isEmpty()
         ]
     ],
     async (req, res) => {
@@ -110,17 +109,17 @@ router.put("/:id",
             return res.status(400).json({errors: errors.array()});
         }
 
-        // edit message, if possible 
+        // edit post, if possible 
         try {
-            // edit and save message 
-            const message = await Message.findById(req.params.id); 
-            if (!message) {
-                return res.status(400).json({msg: "message not found"});
+            // edit and save post 
+            const post = await Post.findById(req.params.id); 
+            if (!post) {
+                return res.status(400).json({msg: "post not found"});
             }
-            message.text = req.body.text; 
-            message.edited = true; 
-            await message.save(); 
-            res.json(message);
+            post.text = req.body.text; 
+            post.edited = true; 
+            await post.save(); 
+            res.json(post);
         } catch (err) {
             console.error(err.message);
             res.status(500).json({msg: "server error"});
@@ -128,17 +127,17 @@ router.put("/:id",
     }
 );
 
-// @route   DELETE api/messages/
-// @desc    delete all messages - FOR DEV PURPOSES ONLY 
+// @route   DELETE api/posts/
+// @desc    delete all posts - FOR DEV PURPOSES ONLY 
 // @access  public
 // router.delete("/", async (req, res) => {
-//     // delete all messages 
+//     // delete all posts
 //     try {
-//         const messages = await Message.find();
-//         for (const message of messages) {
-//             await message.remove(); 
+//         const posts = await Post.find();
+//         for (const post of posts) {
+//             await post.remove(); 
 //         } 
-//         res.json({msg: "all messages deleted"});
+//         res.json({msg: "all posts deleted"});
 //     } catch (err) {
 //         console.error(err.message);
 //         res.status(500).json("server error");

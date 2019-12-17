@@ -7,7 +7,6 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const tokenauth = require("../../middleware/tokenauth");
 const Profile = require("../../models/Profile");
-const Message = require("../../models/Message");
 
 const router = express.Router(); 
 

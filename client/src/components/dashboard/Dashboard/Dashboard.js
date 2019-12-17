@@ -36,7 +36,7 @@ export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, p
                     </div>
                     <div className="tc background-dark br4 ph3 pb2 pt2 mt3">
                         <p className="f3">Start chatting!</p>
-                        <Link to="/globechat" className="btn btn-primary my-1">
+                        <Link to="/posts" className="btn btn-primary my-1">
                             Enter GlobeChat
                         </Link>
                     </div>

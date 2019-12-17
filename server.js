@@ -21,7 +21,7 @@ app.get("/test", (req, res) => res.json({msg: "api running"}));
 // other routes 
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
-app.use("/api/messages", require("./routes/api/messages"));
+app.use("/api/posts", require("./routes/api/posts"));
 app.use("/api/profile", require("./routes/api/profile")); 
 
 const PORT = process.env.PORT || 5000; 
