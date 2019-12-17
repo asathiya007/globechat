@@ -55,7 +55,7 @@ router.post("/",
                 user: req.user.id,
                 name, 
                 avatar, 
-                text: req.body.text,
+                text: req.body.text
             });
             await post.save();
             res.json(post);

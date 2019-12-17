@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {logoutUser} from "../../../actions/auth";
+import "./Navbar.css";
 
 const Navbar = ({auth: {loading, isAuthenticated}, logoutUser}) => {
     const guestLinks = (
@@ -16,6 +17,7 @@ const Navbar = ({auth: {loading, isAuthenticated}, logoutUser}) => {
     const authLinks = (
         <ul>
             <li className="f4"><Link to="/users">GlobeChatters</Link></li>
+            <li className="f4"><Link to="/posts">GlobeChat</Link></li>
             <li className="f4">
                 <Link to="/dashboard">
                     <i className="fas fa-user"></i>{" "}
@@ -35,7 +37,7 @@ const Navbar = ({auth: {loading, isAuthenticated}, logoutUser}) => {
         <nav className="navbar bg-dark">
             <h1>
                 <Link to="/">
-                    <i className="fas fa-code" /> GlobeChat
+                    <i className="fas fa-code main-label"/> GlobeChat
                 </Link>
             </h1>
             {!loading ? (
