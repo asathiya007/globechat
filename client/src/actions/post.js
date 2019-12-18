@@ -4,7 +4,8 @@ import {
     GET_POSTS,
     POST_ERROR,
     UPDATE_REACTS,
-    DELETE_POST
+    DELETE_POST,
+    ADD_POST
 } from "./types";
 
 // get all posts 
@@ -100,6 +101,29 @@ export const deletePost = (postId) => async dispatch => {
             payload: {postId}
         }); 
         dispatch(produceAlert("deleted post", "success"));
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// add post 
+export const addPost = (formData) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        const res = await axios.post("/api/posts", formData, config);
+
+        dispatch({
+            type: ADD_POST,
+            payload: res.data
+        });
+        dispatch(produceAlert("added post", "success"));
     } catch (err) {
         dispatch({
             type: POST_ERROR,
