@@ -3,7 +3,8 @@ import {produceAlert} from "./alert";
 import {
     GET_POSTS,
     POST_ERROR,
-    UPDATE_REACTS
+    UPDATE_REACTS,
+    DELETE_POST
 } from "./types";
 
 // get all posts 
@@ -81,6 +82,24 @@ export const laughPost = (postId) => async dispatch => {
                 laughs: res.data.laughs
             }
         });
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// delete post 
+export const deletePost = (postId) => async dispatch => {
+    try {
+        await axios.delete(`/api/posts/${postId}`);
+
+        dispatch({
+            type: DELETE_POST,
+            payload: {postId}
+        }); 
+        dispatch(produceAlert("deleted post", "success"));
     } catch (err) {
         dispatch({
             type: POST_ERROR,
