@@ -6,7 +6,6 @@ import Video from "./components/layout/Video/Video";
 import Landing from "./components/layout/Landing/Landing";
 import Register from "./components/auth/Register/Register";
 import Login from "./components/auth/Login/Login";
-// redux 
 import {Provider} from "react-redux";
 import store from "./store";
 import Alert from "./components/layout/Alert/Alert";
@@ -18,6 +17,7 @@ import EditProfile from "./components/profile-forms/EditProfile/EditProfile";
 import Profiles from "./components/profiles/Profiles/Profiles";
 import Profile from "./components/profile/Profile/Profile";
 import Posts from "./components/posts/Posts/Posts";
+import Post from "./components/post/Post/Post";
 
 const App = () => {
   useEffect(() => {
@@ -42,6 +42,7 @@ const App = () => {
               <PrivateRoute exact path="/create-profile" component={CreateProfile} />
               <PrivateRoute exact path="/edit-profile" component={EditProfile} />
               <PrivateRoute exact path="/posts" component={Posts} />
+              <PrivateRoute exact path="/posts/:id" component={Post}/>
             </Switch>
           </section>
         </Fragment>

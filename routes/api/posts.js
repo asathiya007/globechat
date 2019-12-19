@@ -17,12 +17,26 @@ router.get("/", tokenauth, async (req, res) => {
     // get all posts, if possible  
     try {
         const posts = await Post.find().sort("-date");
-        res.json({posts});
+        res.json(posts);
     } catch (err) {
         console.error(err.message); 
         res.status(500).json("server error");
     }
 }); 
+
+// @route   GET api/posts/:id
+// @desc    get all posts from all users
+// @access  private
+router.get("/:id", tokenauth, async (req, res) => {
+    // get post with provided id 
+    try {
+        const post = await Post.findById(req.params.id);
+        res.json(post);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+});     
 
 // @route   POST api/posts/
 // @desc    make a post

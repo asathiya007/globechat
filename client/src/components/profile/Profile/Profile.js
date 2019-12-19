@@ -13,7 +13,7 @@ const Profile = ({match, getProfileById, profile: {profile, loading}, auth}) => 
     }, [getProfileById, match.params.id]);
 
     return (
-        <div className="w-80 top-space">
+        <div className="w-80 mt3">
             { profile === null || loading ? <Spinner/> : <Fragment>
                 <Link to="/users" className="btn btn-light">Back to Profiles</Link>
                 {auth.isAuthenticated && !auth.loading && auth.user._id === profile.user._id && (
