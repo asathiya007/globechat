@@ -16,7 +16,7 @@ router.get("/test", (req, res) => res.json({msg: "testing posts route"}));
 router.get("/", tokenauth, async (req, res) => {
     // get all posts, if possible  
     try {
-        const posts = await Post.find().sort("date");
+        const posts = await Post.find().sort("-date");
         res.json({posts});
     } catch (err) {
         console.error(err.message); 

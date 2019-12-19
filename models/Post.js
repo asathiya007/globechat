@@ -18,7 +18,6 @@ const PostSchema = new mongoose.Schema({
     }, 
     text: {
         type: String, 
-        required: true 
     }, 
     likes: [
         {
@@ -51,8 +50,7 @@ const PostSchema = new mongoose.Schema({
                 ref: "user"
             },
             text: {
-                type: String, 
-                required: true
+                type: String
             },
             name: {
                 type: String 
@@ -63,6 +61,10 @@ const PostSchema = new mongoose.Schema({
             date: {
                 type: Date, 
                 default: Date.now
+            },
+            file: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "file"
             }
         }
     ],

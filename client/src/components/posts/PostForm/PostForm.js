@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {addPost} from "../../../actions/post";
 import {connect} from "react-redux";
 import axios from 'axios';
+import "./PostForm.css";
 
 const PostForm = ({addPost}) => {
 
@@ -20,7 +21,6 @@ const PostForm = ({addPost}) => {
         <div className="post-form background-dark br4 pt2 ph3">
             <form className="form my-1" onSubmit={async (e) => {
                 e.preventDefault(); 
-
                 const file = document.querySelector("#fileInput").files; 
 
                 if (!file[0] && text === "") {
@@ -41,6 +41,7 @@ const PostForm = ({addPost}) => {
 
                 addPost({ text, fileData });
                 setText("");
+                document.querySelector("#fileInput").value = "";
             }}>
                 <textarea
                     name="text"
@@ -53,8 +54,11 @@ const PostForm = ({addPost}) => {
                     }}
                     onChange={e => setText(e.target.value)}
                 ></textarea>
-                <input type="file" name="fileInput" id="fileInput" className="btn btn-light my-1"/>
-                <input type="submit" className="btn btn-light my-1" value="Submit" />
+                <label htmlFor="fileInput" className="btn btn-light my-1">
+                    <i className="fas fa-image"></i> Upload Image
+                </label>
+                <input type="file" name="fileInput" id="fileInput" className="btn btn-light my-1" />
+                <input type="submit" className="btn btn-light my-1" value="Submit"/>
             </form>
         </div>
     )
