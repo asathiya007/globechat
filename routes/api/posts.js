@@ -213,4 +213,65 @@ router.get("/displayfile/:id", tokenauth, async (req, res) => {
     }
 }); 
 
+// @route   POST /api/posts/comment/:id
+// @desc    comment on a post  
+// @access  private
+router.post("/comment/:id", tokenauth, async(req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select("-password");
+        const post = await Post.findById(req.params.id); 
+
+        const comment = {
+            user: req.user.id, 
+            name: user.name,
+            avatar: user.avatar,
+            text: req.body.text,
+            file: req.body.fileData 
+        }
+        post.comments.unshift(comment);
+        await post.save(); 
+        res.json(post.comments); 
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+}); 
+
+// @route   POST /api/posts/comment/:id/:comment_id
+// @desc    delete a comment on a post  
+// @access  private
+router.delete("/comment/:id/:comment_id", tokenauth, async(req, res) => {
+    try {
+        // find post and comment 
+        const post = await Post.findById(req.params.id);
+        const comment = post.comments.find(comment => comment._id === req.params.comment_id); 
+
+        // check comment
+        if (!comment) {
+            return res.status(404).json({msg: "comment does not exist"});
+        }
+
+        // check user 
+        if (comment.user.toString() !== req.user.id) {
+            return res.status(404).json({msg: "user not authorized"});
+        }
+
+        // remove file 
+        const file = await File.findById(comment.file);
+        if (file) {
+            await file.remove();
+        } 
+
+        // remove comment 
+        const comments = post.comments.filter(comment => comment._id !== req.params.comment_id); 
+        post.comments = comments; 
+        await post.save(); 
+        res.json(post.comments);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+}); 
+
+
 module.exports = router; 

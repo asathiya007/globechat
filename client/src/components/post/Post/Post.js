@@ -5,6 +5,7 @@ import {getPost} from "../../../actions/post";
 import Spinner from "../../layout/Spinner/Spinner";
 import {Link} from "react-router-dom";
 import PostItem from "../../posts/PostItem/PostItem";
+import CommentForm from "../CommentForm/CommentForm";
 
 const Post = ({getPost, match, post: {post, loading}}) => {
     useEffect(() => {
@@ -16,6 +17,7 @@ const Post = ({getPost, match, post: {post, loading}}) => {
             Back to Posts
         </Link>
         <PostItem post={post} showActions={false}></PostItem>
+        <CommentForm postId={post._id}/>
     </div>
 }
 
