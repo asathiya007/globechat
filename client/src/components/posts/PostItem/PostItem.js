@@ -1,12 +1,33 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import "./PostItem.css";
 import Moment from "react-moment";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {likePost, lovePost, laughPost, deletePost} from "../../../actions/post";
+import axios from "axios";
 
-const PostItem = ({likePost, lovePost, laughPost, deletePost, auth, post: {_id, text, name, avatar, user, likes, loves, laughs, comments, date}}) => {
+const PostItem = ({likePost, lovePost, laughPost, deletePost, auth, post: {_id, text, name, avatar, user, file, likes, loves, laughs, comments, date}}) => {
+
+    useEffect(() => {
+        const processFile = async() => {
+            if (file) {
+                const res = await axios.get(`/api/posts/displayfile/${file}`);
+                if (res.data.mimetype.toString().includes("image")) {
+                    const {data, mimetype} = res.data; 
+                    const newData = new Buffer(data).toString("base64");
+                    setFileData({data: newData, mimetype}); 
+                    toggleIsImage(true);
+                }
+            }
+        }
+           
+        processFile(); 
+    }, [file]);
+
+    const [fileData, setFileData] = useState({});
+    const [isImage, toggleIsImage] = useState(false);
+
     return (
         <div className="post background-dark br4 p-1 my-1">
             <div>
@@ -23,6 +44,13 @@ const PostItem = ({likePost, lovePost, laughPost, deletePost, auth, post: {_id, 
                 <p className="my-1">
                     {text}
                 </p>
+                {
+                    isImage && (
+                        <img src={`data:${fileData.mimetype};base64,${fileData.data}`} alt="user file" style={{
+                            width: "85%"
+                        }}/>
+                    )
+                }
                 <p className="post-date">
                     <Moment format="YYYY/MM/DD">{date}</Moment>
                 </p>

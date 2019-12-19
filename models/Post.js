@@ -20,10 +20,6 @@ const PostSchema = new mongoose.Schema({
         type: String, 
         required: true 
     }, 
-    edited: {
-        type: Boolean, 
-        default: false
-    },
     likes: [
         {
             user: {
@@ -69,7 +65,11 @@ const PostSchema = new mongoose.Schema({
                 default: Date.now
             }
         }
-    ]
+    ],
+    file: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "file" 
+    }
 }); 
 
 module.exports = Post = mongoose.model("post", PostSchema); 

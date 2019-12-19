@@ -1,12 +1,33 @@
 const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
+const fileUpload = require('express-fileupload');
+const tokenauth = require("./middleware/tokenauth");
+const File = require("./models/File");
 
 const app = express();
 app.use(express.json()); 
 app.use(cors());
+app.use(fileUpload());
 
 connectDB(); 
+
+// @route   POST /uploads
+// @desc    file upload endpoint
+// @access  private 
+app.post("/uploads", tokenauth, async (req, res) => {
+    const {name, data, size, mimetype} = req.files.file;
+
+    const file = new File({
+        user: req.user.id, 
+        name, 
+        data,
+        size, 
+        mimetype
+    }); 
+    await file.save(); 
+    res.json(file.id); 
+}); 
 
 // @route   GET /
 // @desc    globechat endpoint

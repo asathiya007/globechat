@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import PropTypes from 'prop-types'
 import {addPost} from "../../../actions/post";
 import {connect} from "react-redux";
+import axios from 'axios';
 
 const PostForm = ({addPost}) => {
 
@@ -17,23 +18,42 @@ const PostForm = ({addPost}) => {
 
     return (
         <div className="post-form background-dark br4 pt2 ph3">
-            <form className="form my-1" onSubmit={e => {
+            <form className="form my-1" onSubmit={async (e) => {
                 e.preventDefault(); 
-                addPost({text}); 
+
+                const file = document.querySelector("#fileInput").files; 
+
+                if (!file[0] && text === "") {
+                    return; 
+                }
+
+                let fileData = null; 
+                if (file[0]) {
+                    fileData = new FormData(); 
+                    fileData.append("file", file[0]);
+                    const res = await axios.post("/uploads", fileData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        }
+                    });  
+                    fileData = res.data; 
+                }
+
+                addPost({ text, fileData });
                 setText("");
             }}>
                 <textarea
                     name="text"
                     cols="30"
-                    rows="5"
+                    rows="3"
                     placeholder={greeting}
-                    required
                     value={text}
                     style={{
                         background: "#F0F8FF"
                     }}
                     onChange={e => setText(e.target.value)}
                 ></textarea>
+                <input type="file" name="fileInput" id="fileInput" className="btn btn-light my-1"/>
                 <input type="submit" className="btn btn-light my-1" value="Submit" />
             </form>
         </div>

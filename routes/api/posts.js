@@ -1,8 +1,8 @@
 const express = require("express");
 const tokenauth = require("../../middleware/tokenauth");
-const {check, validationResult} = require("express-validator");
 const Post = require("../../models/Post");
 const User = require("../../models/User");
+const File = require("../../models/File");
 const router = express.Router(); 
 
 // @route   GET api/posts/test
@@ -28,20 +28,9 @@ router.get("/", tokenauth, async (req, res) => {
 // @desc    make a post
 // @access  private
 router.post("/",
-    [
-        tokenauth,
-        [
-            check("text", "please provide text").not().isEmpty()
-        ],
-    ], 
+    tokenauth, 
     async (req, res) => {
-        // validate input
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({errors: errors.array()});
-        }
-
-        // make post, if possible 
+        // make post
         try {
             // get user info, if user exists 
             const user = await User.findById(req.user.id);
@@ -55,7 +44,8 @@ router.post("/",
                 user: req.user.id,
                 name, 
                 avatar, 
-                text: req.body.text
+                text: req.body.text,
+                file: req.body.fileData
             });
             await post.save();
             res.json(post);
@@ -83,6 +73,12 @@ router.delete("/:id", tokenauth, async (req, res) => {
             return res.status(400).json({msg: "user not authorized"});
         }
 
+        // remove the file 
+        const file = await File.findById(post.file);
+        if (file) {
+            await file.remove();
+        } 
+
         // remove post 
         await post.remove(); 
         res.json({msg: "post deleted"});
@@ -91,58 +87,6 @@ router.delete("/:id", tokenauth, async (req, res) => {
         res.status(500).json({msg: "server error"});
     }
 });
-
-// @route   PUT api/posts/:id
-// @desc    edit a post 
-// @access  private
-router.put("/:id",
-    [
-        tokenauth, 
-        [
-            check("text", "please provide text").not().isEmpty()
-        ]
-    ],
-    async (req, res) => {
-        // validate input 
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({errors: errors.array()});
-        }
-
-        // edit post, if possible 
-        try {
-            // edit and save post 
-            const post = await Post.findById(req.params.id); 
-            if (!post) {
-                return res.status(400).json({msg: "post not found"});
-            }
-            post.text = req.body.text; 
-            post.edited = true; 
-            await post.save(); 
-            res.json(post);
-        } catch (err) {
-            console.error(err.message);
-            res.status(500).json({msg: "server error"});
-        }
-    }
-);
-
-// @route   DELETE api/posts/
-// @desc    delete all posts - FOR DEV PURPOSES ONLY 
-// @access  public
-// router.delete("/", async (req, res) => {
-//     // delete all posts
-//     try {
-//         const posts = await Post.find();
-//         for (const post of posts) {
-//             await post.remove(); 
-//         } 
-//         res.json({msg: "all posts deleted"});
-//     } catch (err) {
-//         console.error(err.message);
-//         res.status(500).json("server error");
-//     }
-// }); 
 
 // @route   PUT api/posts/like/:id
 // @desc    like a post 
@@ -236,5 +180,23 @@ router.put("/laugh/:id", tokenauth, async (req, res) => {
         res.status(500).json("server error");
     }
 });
+
+// @route   GET /api/posts/displayfile/:id
+// @desc    get the mimetype and the buffer data for a file 
+// @access  private
+router.get("/displayfile/:id", tokenauth, async (req, res) => {
+    try {
+        const file = await File.findById(req.params.id);
+        if (!file) {
+            return res.status(404).json("no file found");
+        }
+
+        const {mimetype, data} = file; 
+        res.json({mimetype, data});
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+}); 
 
 module.exports = router; 
