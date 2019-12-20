@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://akshay123:akshay123@globechat-jac0k.mongodb.net/test?retryWrites=true&w=majority",
+    "jwtKey": "globechat"
+}

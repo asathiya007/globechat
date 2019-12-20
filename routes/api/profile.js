@@ -43,18 +43,18 @@ router.post("/",
         // build profile object 
         const profileFields = {}; 
         profileFields.user = req.user.id; 
-        if (location) profileFields.location = location; 
-        if (bio) profileFields.bio = bio;
-        if (phone) profileFields.phone = phone;
+        if (location || location === "") profileFields.location = location; 
+        if (bio || bio === "") profileFields.bio = bio;
+        if (phone || phone === "") profileFields.phone = phone;
         if (email) profileFields.email = email;
 
         // build profile social object 
         profileFields.social = {}; 
-        if (youtube) profileFields.social.youtube = youtube; 
-        if (facebook) profileFields.social.facebook = facebook; 
-        if (twitter) profileFields.social.twitter = twitter; 
-        if (instagram) profileFields.social.instagram = instagram; 
-        if (linkedin) profileFields.social.linkedin = linkedin; 
+        if (youtube || youtube === "") profileFields.social.youtube = youtube; 
+        if (facebook || facebook === "") profileFields.social.facebook = facebook; 
+        if (twitter || twitter === "") profileFields.social.twitter = twitter; 
+        if (instagram || instagram === "") profileFields.social.instagram = instagram; 
+        if (linkedin || linkedin === "") profileFields.social.linkedin = linkedin; 
 
         try {
             let profile = await Profile.findOne({user: req.user.id}); 
