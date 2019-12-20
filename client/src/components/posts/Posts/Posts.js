@@ -18,9 +18,9 @@ const Posts = ({getAllPosts, post: {posts, loading}}) => {
         </p>
         <PostForm />
         <div className="posts">
-            {posts.map(post => (
+            { posts.length > 0 ? posts.map(post => (
                 <PostItem key={post._id} post={post}/>
-            ))}
+            )) : <p>No posts yet, you can make the first post!</p>}
         </div>
     </div>
 }
