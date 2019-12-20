@@ -6,6 +6,7 @@ import Spinner from "../../layout/Spinner/Spinner";
 import {Link} from "react-router-dom";
 import PostItem from "../../posts/PostItem/PostItem";
 import CommentForm from "../CommentForm/CommentForm";
+import CommentItem from "../CommentItem/CommentItem";
 
 const Post = ({getPost, match, post: {post, loading}}) => {
     useEffect(() => {
@@ -18,11 +19,19 @@ const Post = ({getPost, match, post: {post, loading}}) => {
         </Link>
         <PostItem post={post} showActions={false}></PostItem>
         <CommentForm postId={post._id}/>
+        <div className="comments">
+            {
+                post.comments.map(comment => (
+                    <CommentItem key={comment._id} comment={comment} postId={post._id}/>
+                ))
+            }
+        </div>
     </div>
 }
 
 Post.propTypes = {
-    getPost: PropTypes.func.isRequired
+    getPost: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

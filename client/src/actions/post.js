@@ -182,7 +182,7 @@ export const removeComment = (postId, commentId) => async dispatch => {
             type: REMOVE_COMMENT,
             payload: res.data
         }); 
-        dispatch(produceAlert("deleted comment", "success"));
+        dispatch(produceAlert("removed comment", "success"));
     } catch (err) {
         dispatch({
             type: POST_ERROR,
@@ -190,3 +190,4 @@ export const removeComment = (postId, commentId) => async dispatch => {
         });
     }
 }
+

@@ -244,7 +244,7 @@ router.delete("/comment/:id/:comment_id", tokenauth, async(req, res) => {
     try {
         // find post and comment 
         const post = await Post.findById(req.params.id);
-        const comment = post.comments.find(comment => comment._id === req.params.comment_id); 
+        const comment = post.comments.find(comment => comment._id.toString() === req.params.comment_id); 
 
         // check comment
         if (!comment) {
@@ -263,7 +263,7 @@ router.delete("/comment/:id/:comment_id", tokenauth, async(req, res) => {
         } 
 
         // remove comment 
-        const comments = post.comments.filter(comment => comment._id !== req.params.comment_id); 
+        const comments = post.comments.filter(comment => comment._id.toString() !== req.params.comment_id); 
         post.comments = comments; 
         await post.save(); 
         res.json(post.comments);

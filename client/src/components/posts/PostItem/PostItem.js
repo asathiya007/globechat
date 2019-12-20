@@ -17,6 +17,9 @@ const PostItem = ({
     showActions
  }) => {
 
+    const [fileData, setFileData] = useState({});
+    const [isImage, toggleIsImage] = useState(false);
+
     useEffect(() => {
         const processFile = async() => {
             if (file) {
@@ -32,9 +35,6 @@ const PostItem = ({
            
         processFile(); 
     }, [file]);
-
-    const [fileData, setFileData] = useState({});
-    const [isImage, toggleIsImage] = useState(false);
 
     return (
         <div className="post background-dark br4 p-1 my-1">

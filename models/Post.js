@@ -65,7 +65,31 @@ const PostSchema = new mongoose.Schema({
             file: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "file"
-            }
+            },
+            likes: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "user"
+                    }
+                }
+            ],
+            loves: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "user"
+                    }
+                }
+            ],
+            laughs: [
+                {
+                    user: {
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "user"
+                    }
+                }
+            ]
         }
     ],
     file: {
