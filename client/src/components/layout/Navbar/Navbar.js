@@ -37,7 +37,7 @@ const Navbar = ({auth: {loading, isAuthenticated}, logoutUser}) => {
         <nav className="navbar bg-dark">
             <h1>
                 <Link to="/">
-                    <i className="fas fa-code main-label"/> GlobeChat
+                    <i className="fas fa-globe-americas main-label"/> GlobeChat
                 </Link>
             </h1>
             {!loading ? (
