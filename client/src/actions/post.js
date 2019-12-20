@@ -8,7 +8,8 @@ import {
     ADD_POST, 
     GET_POST,
     ADD_COMMENT, 
-    REMOVE_COMMENT
+    REMOVE_COMMENT,
+    UPDATE_COMMENT_REACTS
 } from "./types";
 
 // get all posts 
@@ -191,3 +192,71 @@ export const removeComment = (postId, commentId) => async dispatch => {
     }
 }
 
+// like comment 
+export const likeComment = (postId, commentId) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/comment/like/${postId}/${commentId}`);
+
+        dispatch({
+            type: UPDATE_COMMENT_REACTS,
+            payload: {
+                postId,
+                commentId,
+                likes: res.data.likes,
+                loves: res.data.loves,
+                laughs: res.data.laughs
+            }
+        });
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// love comment 
+export const loveComment = (postId, commentId) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/comment/love/${postId}/${commentId}`);
+
+        dispatch({
+            type: UPDATE_COMMENT_REACTS,
+            payload: {
+                postId,
+                commentId,
+                likes: res.data.likes,
+                loves: res.data.loves,
+                laughs: res.data.laughs
+            }
+        });
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}
+
+// laugh comment 
+export const laughComment = (postId, commentId) => async dispatch => {
+    try {
+        const res = await axios.put(`/api/posts/comment/laugh/${postId}/${commentId}`);
+
+        dispatch({
+            type: UPDATE_COMMENT_REACTS,
+            payload: {
+                postId,
+                commentId,
+                likes: res.data.likes,
+                loves: res.data.loves,
+                laughs: res.data.laughs
+            }
+        });
+    } catch (err) {
+        dispatch({
+            type: POST_ERROR,
+            payload: { msg: err.response.statusText, status: err.response.status }
+        });
+    }
+}

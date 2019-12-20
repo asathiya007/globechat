@@ -273,5 +273,103 @@ router.delete("/comment/:id/:comment_id", tokenauth, async(req, res) => {
     }
 }); 
 
+// @route   PUT api/posts/comment/like/:id/:comment_id
+// @desc    like a comment of a post 
+// @access  private
+router.put("/comment/like/:id/:comment_id", tokenauth, async (req, res) => {
+    try {
+        // get post and comment 
+        const post = await Post.findById(req.params.id);
+        const comment = post.comments.find(comment => comment._id.toString() === req.params.comment_id); 
+
+        // obtain new likes 
+        const newLikes = comment.likes.filter(like => like.user.toString() !== req.user.id);
+
+        // if the post has not been liked, like it, else unlike it 
+        if (comment.likes.length === newLikes.length) {
+            comment.likes.unshift({ user: req.user.id });
+        } else {
+            comment.likes = newLikes;
+        }
+
+        // unlove and unlaugh at the post
+        const newLoves = comment.loves.filter(love => love.user.toString() !== req.user.id);
+        comment.loves = newLoves;
+        const newLaughs = comment.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
+        comment.laughs = newLaughs;
+
+        await post.save();
+        res.json({ likes: comment.likes, loves: comment.loves, laughs: comment.laughs });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+}); 
+
+// @route   PUT api/posts/comment/love/:id/:comment_id
+// @desc    love a comment of a post 
+// @access  private
+router.put("/comment/love/:id/:comment_id", tokenauth, async (req, res) => {
+    try {
+        // get post and comment 
+        const post = await Post.findById(req.params.id);
+        const comment = post.comments.find(comment => comment._id.toString() === req.params.comment_id);
+
+        // obtain new loves 
+        const newLoves = comment.loves.filter(love => love.user.toString() !== req.user.id);
+
+        // if the post has not been liked, like it, else unlike it 
+        if (comment.loves.length === newLoves.length) {
+            comment.loves.unshift({ user: req.user.id });
+        } else {
+            comment.loves = newLoves;
+        }
+
+        // unlike and unlaugh at the post
+        const newLikes = comment.likes.filter(like => like.user.toString() !== req.user.id);
+        comment.likes = newLikes;
+        const newLaughs = comment.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
+        comment.laughs = newLaughs;
+
+        await post.save();
+        res.json({ likes: comment.likes, loves: comment.loves, laughs: comment.laughs });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+}); 
+
+// @route   PUT api/posts/comment/laugh/:id/:comment_id
+// @desc    laugh at a comment of a post 
+// @access  private
+router.put("/comment/laugh/:id/:comment_id", tokenauth, async (req, res) => {
+    try {
+        // get post and comment 
+        const post = await Post.findById(req.params.id);
+        const comment = post.comments.find(comment => comment._id.toString() === req.params.comment_id);
+
+        // obtain new laughs 
+        const newLaughs = comment.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
+
+        // if the post has not been liked, like it, else unlike it 
+        if (comment.laughs.length === newLaughs.length) {
+            comment.laughs.unshift({ user: req.user.id });
+        } else {
+            comment.laughs = newLaughs;
+        }
+
+        // unlike and unlove the post
+        const newLikes = comment.likes.filter(like => like.user.toString() !== req.user.id);
+        comment.likes = newLikes;
+        const newLoves = comment.laughs.filter(love => love.user.toString() !== req.user.id);
+        comment.loves = newLoves;
+
+        await post.save();
+        res.json({ likes: comment.likes, loves: comment.loves, laughs: comment.laughs });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json("server error");
+    }
+}); 
 
 module.exports = router; 

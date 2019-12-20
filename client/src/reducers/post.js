@@ -6,7 +6,8 @@ import {
     ADD_POST,
     GET_POST,
     ADD_COMMENT,
-    REMOVE_COMMENT
+    REMOVE_COMMENT,
+    UPDATE_COMMENT_REACTS
 } from "../actions/types";
 
 const initialState = {
@@ -52,6 +53,16 @@ export default function(state = initialState, action) {
                     .map(post => post._id === payload.postId ? {
                         ...post, laughs: payload.laughs
                     } : post),
+                loading: false
+            }
+        case UPDATE_COMMENT_REACTS:
+            const newComment = state.post.comments.find(comment => comment._id.toString() === payload.commentId);
+            newComment.likes = payload.likes; 
+            newComment.loves = payload.loves; 
+            newComment.laughs = payload.laughs; 
+            return {
+                ...state, 
+                post: {...state.post, comments: state.post.comments.map(comment => comment._id.toString() === payload.commentId ? newComment : comment)},
                 loading: false
             }
         case DELETE_POST:

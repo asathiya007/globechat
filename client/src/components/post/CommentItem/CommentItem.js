@@ -1,13 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, {Fragment, useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import Moment from "react-moment";
-import {removeComment} from "../../../actions/post";
+import {removeComment, likeComment, loveComment, laughComment} from "../../../actions/post";
 import axios from "axios";
 
 const CommentItem = ({
     removeComment, 
+    likeComment,
+    loveComment,
+    laughComment,
     comment: {
         _id, 
         text, 
@@ -15,10 +18,14 @@ const CommentItem = ({
         avatar, 
         user,
         date,
-        file
+        file,
+        likes,
+        loves,
+        laughs
     }, 
     postId,
-    auth
+    auth,
+    post
 }) => {
     const [fileData, setFileData] = useState({});
     const [isImage, toggleIsImage] = useState(false);
@@ -65,8 +72,8 @@ const CommentItem = ({
                 <p className="post-date">
                     <Moment format="YYYY/MM/DD">{date}</Moment>
                 </p>
-                {/* <Fragment>
-                    <button onClick={e => likePost(_id)} type="button" className="btn btn-light">
+                <Fragment>
+                    <button onClick={e => likeComment(postId, _id)} type="button" className="btn btn-light">
                         <i className="fas fa-thumbs-up"></i>
                         {
                             likes.length > 0 && (
@@ -74,7 +81,7 @@ const CommentItem = ({
                             )
                         }
                     </button>
-                    <button onClick={e => lovePost(_id)} type="button" className="btn btn-light">
+                    <button onClick={e => loveComment(postId, _id)} type="button" className="btn btn-light">
                         <i className="fas fa-heart"></i>
                         {
                             loves.length > 0 && (
@@ -82,7 +89,7 @@ const CommentItem = ({
                             )
                         }
                     </button>
-                    <button onClick={e => laughPost(_id)} type="button" className="btn btn-light">
+                    <button onClick={e => laughComment(postId, _id)} type="button" className="btn btn-light">
                         <i className="fas fa-laugh-beam"></i>
                         {
                             laughs.length > 0 && (
@@ -90,7 +97,7 @@ const CommentItem = ({
                             )
                         }
                     </button>
-                </Fragment> */}
+                </Fragment>
                 {
                     !auth.loading && user === auth.user._id && (
                         <button
@@ -111,11 +118,15 @@ CommentItem.propTypes = {
     removeComment: PropTypes.func.isRequired,
     postId: PropTypes.string.isRequired,
     auth: PropTypes.object.isRequired,
-    comment: PropTypes.object.isRequired
+    comment: PropTypes.object.isRequired,
+    likeComment: PropTypes.func.isRequired,
+    loveComment: PropTypes.func.isRequired,
+    laughComment: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
-})
+    auth: state.auth,
+    post: state.post
+});
 
-export default connect(mapStateToProps, {removeComment})(CommentItem);
+export default connect(mapStateToProps, {removeComment, likeComment, loveComment, laughComment})(CommentItem);
