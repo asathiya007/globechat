@@ -27,45 +27,45 @@ const ProfileTop = ({profile: {
             </p>
             <div>
                 <p>
-                    <i className="fas fa-envelope"></i> {email}
+                    <i className="fas fa-envelope white-hover"></i> {email}
                 </p>
                 <p>
-                    <i className="fas fa-phone"></i> {phone}
+                    <i className="fas fa-phone white-hover"></i> {phone}
                 </p>
             </div>
             <div className="icons my-1">
                 {
                     social && social.twitter && (
                         <a href={social.twitter} target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-twitter fa-2x"></i>
+                            <i className="fab fa-twitter fa-2x white-hover"></i>
                         </a>
                     )
                 }
                 {
                     social && social.facebook && (
                         <a href={social.facebook} target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-facebook fa-2x"></i>
+                            <i className="fab fa-facebook fa-2x white-hover"></i>
                         </a>
                     )
                 }
                 {
                     social && social.linkedin && (
                         <a href={social.linkedin} target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-linkedin fa-2x"></i>
+                            <i className="fab fa-linkedin fa-2x white-hover"></i>
                         </a>
                     )
                 }
                 {
                     social && social.youtube && (
                         <a href={social.youtube} target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-youtube fa-2x"></i>
+                            <i className="fab fa-youtube fa-2x white-hover"></i>
                         </a>
                     )
                 }
                 {
                     social && social.instagram && (
                         <a href={social.instagram} target="_blank" rel="noopener noreferrer">
-                            <i className="fab fa-instagram fa-2x"></i>
+                            <i className="fab fa-instagram fa-2x white-hover"></i>
                         </a>
                     )
                 }
