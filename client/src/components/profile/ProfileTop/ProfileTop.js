@@ -29,9 +29,11 @@ const ProfileTop = ({profile: {
                 <p>
                     <i className="fas fa-envelope white-hover"></i> {email}
                 </p>
-                <p>
-                    <i className="fas fa-phone white-hover"></i> {phone}
-                </p>
+                { phone && (
+                    <p>
+                        <i className="fas fa-phone white-hover"></i> {phone}
+                    </p>
+                )}
             </div>
             <div className="icons my-1">
                 {
