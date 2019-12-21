@@ -1,2 +1,3 @@
 # globechat
-A global chat room for people to communicate at any time from anywhere in the world! 
+A social media platform through which people all across the globe can connect and communicate! 
+https://globechat-asathiya.herokuapp.com/
