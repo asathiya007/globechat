@@ -59,7 +59,7 @@ const CreateProfile = ({createProfile, history, userEmail}) => {
         <div>
             <h1 className='large white-text'>Create Your Profile</h1>
             <p className='lead'>
-                <i className='fas fa-user' /> Let's get some information to make your
+                <i className='fas fa-user white-hover' /> Let's get some information to make your
 				profile stand out
 			</p>
             <form className="form" style={{width: "40vw"}} onSubmit={onSubmit}>

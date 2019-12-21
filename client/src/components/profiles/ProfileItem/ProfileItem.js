@@ -27,14 +27,14 @@ const ProfileItem = ({
             </div>
             <ul>
                 <li className="text-primary">
-                    <i className="fas fa-user"></i> {bio}
+                    <i className="fas fa-user blue-hover"></i> {bio}
                 </li>
                 <br/>
                 <li className="text-primary">
-                    <i className="fas fa-envelope"></i> {email}
+                    <i className="fas fa-envelope blue-hover"></i> {email}
                 </li>
                 <li className="text-primary">
-                    <i className="fas fa-phone"></i> {phone}
+                    <i className="fas fa-phone blue-hover"></i> {phone}
                 </li>
             </ul>
         </div>

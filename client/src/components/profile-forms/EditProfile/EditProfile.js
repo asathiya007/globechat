@@ -80,7 +80,7 @@ const EditProfile = ({createProfile, getCurrentProfile, history, profile: {profi
         <div>
             <h1 className='large white-text'>Edit Your Profile</h1>
             <p className='lead'>
-                <i className='fas fa-user' /> Let's edit some information to update your profile
+                <i className='fas fa-user white-hover' /> Let's edit some information to update your profile
 			</p>
             <div className="background-dark br4 p-2">
                 <form className="form" style={{ width: "40vw" }} onSubmit={onSubmit}>

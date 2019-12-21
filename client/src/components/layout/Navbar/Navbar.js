@@ -20,13 +20,13 @@ const Navbar = ({auth: {loading, isAuthenticated}, logoutUser}) => {
             <li className="f4"><Link to="/posts">GlobeChat</Link></li>
             <li className="f4">
                 <Link to="/dashboard">
-                    <i className="fas fa-user"></i>{" "}
+                    <i className="fas fa-user blue-hover"></i>{" "}
                     <span className="hide-sm">Dashboard</span>
                 </Link>
             </li>
             <li className="f4" onClick={logoutUser}>
                 <Link to="/">
-                    <i className="fas fa-sign-out-alt"></i>{" "}
+                    <i className="fas fa-sign-out-alt blue-hover"></i>{" "}
                     <span className="hide-sm">Logout</span>
                 </Link>
             </li>

@@ -18,7 +18,7 @@ const Profiles = ({getAllUsers, profile: {allUsers, loading}}) => {
                         GlobeChatters 
                     </h1>
                     <p className="lead">
-                        <i className="fab fa-connectdevelop"></i> Browse and connect with other chatters!
+                        <i className="fab fa-connectdevelop white-hover"></i> Browse and connect with other chatters!
                     </p>
                     <div className="profiles">
                         {allUsers.length > 0 ? (

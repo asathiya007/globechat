@@ -7,6 +7,16 @@
   --success-color: #28a745;
 }
 
+.white-hover:hover {
+   color: white; 
+   cursor: pointer; 
+}
+
+.blue-hover:hover {
+   color: lightskyblue; 
+   cursor: pointer; 
+}
+
 .background-dark {
     background: var(--dark-color);
 }

@@ -21,7 +21,7 @@ export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, p
             <div>
                 <h1 className="large white-text">Dashboard</h1>
                 <p className="lead">
-                    <i className="fas fa-user"></i>{" "}
+                    <i className="fas fa-user white-hover"></i>{" "}
                     Welcome {user && user.name}
                 </p>
             </div>
