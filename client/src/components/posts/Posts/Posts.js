@@ -11,7 +11,7 @@ const Posts = ({getAllPosts, post: {posts, loading}}) => {
         getAllPosts(); 
     }, [getAllPosts]);
 
-    return loading ? <Spinner/> : <div className="w-70">
+    return loading ? <Spinner/> : <div className="w-80">
         <h1 className="large white-text">Posts</h1>
         <p className="lead">
             <i className="fas fa-user"></i> Join the conversation!

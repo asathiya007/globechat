@@ -17,8 +17,8 @@ export const Dashboard = ({getCurrentProfile, auth: {user}, profile: {loading, p
     }
 
     return (
-        <div className="top-space w-50">
-            <div className="tc background-dark br4 ph3 pv2">
+        <div className="w-80">
+            <div>
                 <h1 className="large white-text">Dashboard</h1>
                 <p className="lead">
                     <i className="fas fa-user"></i>{" "}

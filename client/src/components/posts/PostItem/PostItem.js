@@ -49,7 +49,7 @@ const PostItem = ({
                 </Link>
             </div>
             <div>
-                <p className="my-1">
+                <p className="f3 my-1">
                     {text}
                 </p>
                 {
