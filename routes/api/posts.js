@@ -25,7 +25,7 @@ router.get("/", tokenauth, async (req, res) => {
 }); 
 
 // @route   GET api/posts/:id
-// @desc    get all posts from all users
+// @desc    get post by id
 // @access  private
 router.get("/:id", tokenauth, async (req, res) => {
     // get post with provided id 
