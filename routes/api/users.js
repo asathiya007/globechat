@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const tokenauth = require("../../middleware/tokenauth");
 const Profile = require("../../models/Profile");
+const Post = require("../../models/Post");
 
 const router = express.Router(); 
 
@@ -115,9 +116,9 @@ router.get("/", tokenauth, async (req, res) => {
 // @access  private 
 router.delete("/", tokenauth, async(req, res) => {
     try {
-        await User.findByIdAndDelete(req.user.id);
+        await Post.deleteMany({user: req.user.id});
         await Profile.deleteOne({user: req.user.id});
-        await Message.deleteMany({user: req.user.id});
+        await User.findByIdAndDelete(req.user.id);
         res.json({msg: "removed user"});
     } catch (err) {
         console.error(err.message);
