@@ -285,14 +285,14 @@ router.put("/comment/like/:id/:comment_id", tokenauth, async (req, res) => {
         // obtain new likes 
         const newLikes = comment.likes.filter(like => like.user.toString() !== req.user.id);
 
-        // if the post has not been liked, like it, else unlike it 
+        // if the comment has not been liked, like it, else unlike it 
         if (comment.likes.length === newLikes.length) {
             comment.likes.unshift({ user: req.user.id });
         } else {
             comment.likes = newLikes;
         }
 
-        // unlove and unlaugh at the post
+        // unlove and unlaugh at the comment
         const newLoves = comment.loves.filter(love => love.user.toString() !== req.user.id);
         comment.loves = newLoves;
         const newLaughs = comment.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
@@ -318,14 +318,14 @@ router.put("/comment/love/:id/:comment_id", tokenauth, async (req, res) => {
         // obtain new loves 
         const newLoves = comment.loves.filter(love => love.user.toString() !== req.user.id);
 
-        // if the post has not been liked, like it, else unlike it 
+        // if the comment has not been liked, like it, else unlike it 
         if (comment.loves.length === newLoves.length) {
             comment.loves.unshift({ user: req.user.id });
         } else {
             comment.loves = newLoves;
         }
 
-        // unlike and unlaugh at the post
+        // unlike and unlaugh at the comment
         const newLikes = comment.likes.filter(like => like.user.toString() !== req.user.id);
         comment.likes = newLikes;
         const newLaughs = comment.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
@@ -351,14 +351,14 @@ router.put("/comment/laugh/:id/:comment_id", tokenauth, async (req, res) => {
         // obtain new laughs 
         const newLaughs = comment.laughs.filter(laugh => laugh.user.toString() !== req.user.id);
 
-        // if the post has not been liked, like it, else unlike it 
+        // if the comment has not been liked, like it, else unlike it 
         if (comment.laughs.length === newLaughs.length) {
             comment.laughs.unshift({ user: req.user.id });
         } else {
             comment.laughs = newLaughs;
         }
 
-        // unlike and unlove the post
+        // unlike and unlove the comment
         const newLikes = comment.likes.filter(like => like.user.toString() !== req.user.id);
         comment.likes = newLikes;
         const newLoves = comment.laughs.filter(love => love.user.toString() !== req.user.id);
