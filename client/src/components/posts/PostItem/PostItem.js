@@ -30,7 +30,7 @@ const PostItem = ({
                     const newData = new Buffer(data).toString("base64");
                     setFileData({data: newData, mimetype}); 
                     toggleIsImage(true);
-                } else if (res.data.mimetype.toString().includes("video")) {
+                } else if (res.data.mimetype.toString().includes("video") || res.data.mimetype.toString().includes("mp4")) {
                     const { data, mimetype } = res.data;
                     const newData = new Buffer(data).toString("base64");
                     setFileData({ data: newData, mimetype });
