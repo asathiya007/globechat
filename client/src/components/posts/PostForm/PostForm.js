@@ -55,7 +55,7 @@ const PostForm = ({addPost}) => {
                     onChange={e => setText(e.target.value)}
                 ></textarea>
                 <label htmlFor="fileInput" className="btn btn-light my-1">
-                    <i className="fas fa-image"></i> Upload Image
+                    <i className="fas fa-image"></i> Upload Image/Video
                 </label>
                 <input type="file" name="fileInput" id="fileInput" className="btn btn-light my-1" />
                 <input type="submit" className="btn btn-light my-1" value="Submit"/>

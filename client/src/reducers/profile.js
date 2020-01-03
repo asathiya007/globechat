@@ -40,7 +40,8 @@ export default function(state = initialState, action) {
             return {
                 ...state, 
                 allUsers: payload.profiles,
-                loading: false
+                loading: false, 
+                profile: null
             }
         default: 
             return state; 

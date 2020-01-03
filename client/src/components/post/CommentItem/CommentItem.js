@@ -29,6 +29,7 @@ const CommentItem = ({
 }) => {
     const [fileData, setFileData] = useState({});
     const [isImage, toggleIsImage] = useState(false);
+    const [isVideo, toggleIsVideo] = useState(false);
 
     useEffect(() => {
         const processFile = async () => {
@@ -39,6 +40,11 @@ const CommentItem = ({
                     const newData = new Buffer(data).toString("base64");
                     setFileData({ data: newData, mimetype });
                     toggleIsImage(true);
+                } else if (res.data.mimetype.toString().includes("video")) {
+                    const { data, mimetype } = res.data;
+                    const newData = new Buffer(data).toString("base64");
+                    setFileData({ data: newData, mimetype });
+                    toggleIsVideo(true);
                 }
             }
         }
@@ -67,6 +73,13 @@ const CommentItem = ({
                         <img src={`data:${fileData.mimetype};base64,${fileData.data}`} alt="user file" style={{
                             width: "85%"
                         }} />
+                    )
+                }
+                {
+                    isVideo && (
+                        <video src={`data:${fileData.mimetype};base64,${fileData.data}`} alt="user file" style={{
+                            width: "85%"
+                        }} autoPlay controls muted loop/>
                     )
                 }
                 <p className="post-date">

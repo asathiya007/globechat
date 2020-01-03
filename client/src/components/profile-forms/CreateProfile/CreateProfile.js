@@ -62,7 +62,7 @@ const CreateProfile = ({createProfile, history, userEmail}) => {
                 <i className='fas fa-user white-hover' /> Let's get some information to make your
 				profile stand out
 			</p>
-            <form className="background-dark br4 p-2 pt1 form" style={{width: "40vw"}} onSubmit={onSubmit}>
+            <form className="center background-dark br4 p-2 pt1 form" style={{width: "40vw"}} onSubmit={onSubmit}>
                 <div className="form-group">
                     <p className="f4">Location</p>
                     <input type="text" placeholder="Location" name="location" value={location} onChange={onChange}/>
@@ -80,7 +80,10 @@ const CreateProfile = ({createProfile, history, userEmail}) => {
                 </div>
                 <div className="form-group">
                     <p className="f4">Bio</p>
-                    <textarea placeholder="A short bio of yourself" name="bio" value={bio} onChange={onChange}></textarea>
+                    <textarea placeholder="A short bio of yourself" cols="30"
+                        rows="3" name="bio" value={bio} onChange={onChange} style={{
+                            resize: "none"
+                        }}></textarea>
                     <small className="form-text">Tell us a little about yourself</small>
                 </div>
                 <div className="my-2">

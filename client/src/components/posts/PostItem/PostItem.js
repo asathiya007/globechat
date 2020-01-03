@@ -45,7 +45,7 @@ const PostItem = ({
     return (
         <div className="post background-dark br4 p-1 my-1">
             <div>
-                <Link to={`profile/${user._id}`}>
+                <Link to={`profile/${user}`}>
                     <img
                         className="round-img"
                         src={avatar}
@@ -69,7 +69,7 @@ const PostItem = ({
                     isVideo && (
                         <video src={`data:${fileData.mimetype};base64,${fileData.data}`} alt="user file" style={{
                             width: "85%"
-                        }} autoPlay controls muted/>
+                        }} autoPlay controls muted loop/>
                     )
                 }
                 <p className="post-date">
