@@ -49,7 +49,6 @@ const CommentForm = ({postId, addComment}) => {
                     placeholder={greeting}
                     value={text}
                     style={{
-                        background: "#F0F8FF",
                         resize: "none"
                     }}
                     onChange={e => setText(e.target.value)}

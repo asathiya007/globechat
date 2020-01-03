@@ -82,27 +82,25 @@ const EditProfile = ({createProfile, getCurrentProfile, history, profile: {profi
             <p className='lead'>
                 <i className='fas fa-user white-hover' /> Let's edit some information to update your profile
 			</p>
-            <div className="background-dark br4 p-2">
+            <div className="background-dark br4 p-2 pt1">
                 <form className="form" style={{ width: "40vw" }} onSubmit={onSubmit}>
                     <div className="form-group">
+                        <p className="f4">Location</p>
                         <input type="text" placeholder="Location" name="location" value={location} onChange={onChange} />
                         <small className="form-text">
                             City & state suggested (eg. Boston, MA)
                     </small>
                     </div>
                     <div className="form-group">
+                        <p className="f4">Phone Number</p>
                         <input type="text" placeholder="Phone Number" name="phone" value={phone} onChange={onChange} />
-                        <small className="form-text">
-                            Phone Number
-                    </small>
                     </div>
                     <div className="form-group">
+                        <p className="f4">Email address</p>
                         <input type="text" name="email" value={email} readOnly />
-                        <small className="form-text">
-                            Email
-                    </small>
                     </div>
                     <div className="form-group">
+                        <p className="f4">Bio</p>
                         <textarea placeholder="A short bio of yourself" name="bio" value={bio} onChange={onChange}></textarea>
                         <small className="form-text">Tell us a little about yourself</small>
                     </div>
